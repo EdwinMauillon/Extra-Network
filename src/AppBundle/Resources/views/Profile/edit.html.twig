@@ -1,0 +1,68 @@
+{% extends "AppBundle::main.html.twig" %}
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block nav %}
+<li> <a href="{{ path("mes_amis",{ 'username':app.session.get('username')  })}}">Mes amis</a> </li>
+<li class="active" > <a href="{{ path("fos_user_profile_edit") }}">Mon compte</a> </li>
+
+{% endblock %}
+
+
+{% block body %}
+{{ parent() }}
+
+<div class="container">
+	<div class="row">
+		{% for type, messages in app.session.flashBag.all %}
+		    {% for message in messages %}
+                <div class="alert alert-{{ type }} text-center">
+                    {{ message|trans({}, 'FOSUserBundle') }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+	</div>
+
+
+    <div class="row">
+        <div class="col-sm-offset-2">
+				{{ form_start(form, { 'action': path('fos_user_profile_edit'), 'attr': { 'class': 'fos_user_profile_edit' } }) }}
+						{{ form_errors(form) }}
+						<div class="form-group">
+								{{ form_row(form.username, {'attr': {'class': 'form-control'}}) }}
+						</div>
+						<div class="form-group">
+								{{ form_row(form.email, {'attr': {'class': 'form-control'}}) }}
+						</div>
+						<div class="form-group">
+								{{ form_row(form.famille, {'attr': {'class': 'form-control'}}) }}
+						</div>
+						<div class="form-group">
+								{{ form_row(form.race, {'attr': {'class': 'form-control'}}) }}
+						</div>
+						<div class="form-group">
+								{{ form_row(form.nourritureFav, {'attr': {'class': 'form-control'}}) }}
+						</div>
+						<div class="form-group">
+								{{ form_row(form.planete, {'attr': {'class': 'form-control'}}) }}
+						</div>
+						<div class="form-group">
+								{{ form_row(form.galaxie, {'attr': {'class': 'form-control'}}) }}
+						</div>
+						<div class="form-group">
+								{{ form_row(form.current_password, {'attr': {'class': 'form-control'}}) }}
+						</div>
+						<div>
+								<input type="submit" value="{{ 'profile.edit.submit'|trans }}" />
+						</div>
+				{{ form_end(form) }}
+            <br>
+            <br>
+            <a href="{{ path("fos_user_change_password") }}"><button type="button" class="btn btn-default">Changer son mot de passe</button></a>
+            <br>
+            <br>
+            <a href="{{ path("fos_user_profile_show") }}"><button type="button" class="btn btn-warning">Voir son profil public</button></a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

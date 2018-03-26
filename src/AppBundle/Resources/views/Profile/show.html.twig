@@ -1,0 +1,53 @@
+{% extends "AppBundle::main.html.twig" %}
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block nav %}
+<li> <a href="{{ path("mes_amis",{ 'username':app.session.get('username')  })}}">Mes amis</a> </li>
+<li class="active" > <a href="{{ path("fos_user_profile_edit") }}">Mon compte</a> </li>
+
+{% endblock %}
+{% block stylesheets %}
+    <link href="{{ asset('css/show.css') }}" rel="stylesheet"/>
+
+
+{% endblock %}
+
+{% block body %}
+{{ parent() }}
+
+<div class="container">
+	<div class="row">
+		{% for type, messages in app.session.flashBag.all %}
+		    {% for message in messages %}
+                <div class="alert alert-{{ type }} text-center">
+                    {{ message|trans({}, 'FOSUserBundle') }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+	</div>
+
+    <div class="row">
+        <!--<div class="col-sm-offset-2">-->
+            <!--<div class="">-->
+        <div class="panel-group">
+            <div class="panel panel-info">
+                <div class="panel-heading">Profil de {{ user.username }}</div>
+                <div class="panel-body">
+                    <br>
+                    <p><span class="gras">{{ 'profile.show.username'|trans }}:</span> {{ user.username }}</p>
+                    <p><span class="gras">{{ 'profile.show.email'|trans }}:</span> {{ user.email }}</p>
+                    <p><span class="gras">Nom:</span> {{ user.nom }}</p>
+                    <p><div class="gras">Amis: </div>
+                    {% for amis in user.amis %}
+                        {{ amis }}<br>
+                    {% endfor %}
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <a href="{{ path("fos_user_profile_edit") }}"><button type="button" class="btn btn-default">Retour à la page précédente</button></a>
+</div>
+
+{% endblock %}

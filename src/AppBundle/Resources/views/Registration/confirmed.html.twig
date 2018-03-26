@@ -1,0 +1,22 @@
+{% extends "AppBundle::main.html.twig" %}
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block nav %}
+<li> <a href="{{ path("fos_user_profile_edit") }}">Mon compte</a> </li>
+{% endblock %}
+
+{% block body %}
+{{ parent() }}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-offset-2">
+            <p>{{ 'registration.confirmed'|trans({'%username%': user.username}) }}</p>
+            {% if targetUrl %}
+                <p><a href="{{ targetUrl }}">{{ 'registration.back'|trans }}</a></p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

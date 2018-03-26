@@ -1,0 +1,71 @@
+{% extends "::base.html.twig" %}
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block body %}
+
+<style>
+    body{
+        background-color: gray; /* Le fond de la page sera noir */
+    }
+</style>
+
+<div class="container">
+	<div class="row">
+		{% for type, messages in app.session.flashBag.all %}
+		    {% for message in messages %}
+                <div class="alert alert-{{ type }} text-center">
+                    {{ message|trans({}, 'FOSUserBundle') }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+	</div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+            	<div class="panel-heading">
+                	<h2 class="text-center">Connexion</h2>
+                </div>
+                <div class="panel-body">
+                    <div><br></div>
+                    <form action="{{ path("fos_user_security_check") }}" method="post">
+                        {% if csrf_token %}
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+                        {% endif %}
+                        <div class="form-group">
+                            <label for="username">{{ 'security.login.username'|trans }}</label>
+                            <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="password">{{ 'security.login.password'|trans }}</label>
+                            <input type="password" id="password" name="_password" required="required" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+                            <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
+                        </div>
+                        <div><br></div>
+                        <div class="text-center">
+                            <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" class="btn btn-info" />
+                            <div><br></div>
+                            <input type="reset" value="Effacer" class="btn btn-info">
+                        </div>
+                        <div><br></div>
+                    </form>
+        		</div>
+        		<div><br></div>
+        		<div class="panel-footer">
+        		    <div><br></div>
+        		    <p>Pas encore membre ? <a href="{{ path("fos_user_registration_register") }}">Inscription</a> </p>
+        		</div>
+        	</div>
+        </div>
+    </div>
+    <div class="row">
+        <div><br></div
+        <div><br></div>
+        <font color=#5bc0de><h1><marquee>BIENVENUE SUR EXTRA-NETWORK</marquee></h1></font>
+    </div>
+</div>
+{% endblock %}

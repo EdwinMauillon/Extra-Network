@@ -1,0 +1,46 @@
+{% extends "AppBundle::main.html.twig" %}
+
+{% block nav %}
+<li> <a href="{{ path("mes_amis",{ 'username':app.session.get('username')  })}}">Mes amis</a> </li>
+<li> <a href="{{ path("fos_user_profile_edit") }}">Mon compte</a> </li>
+
+{% endblock %}
+
+{% block stylesheets %}
+    <link href="{{ asset('css/voir_profil.css') }}" rel="stylesheet"/>
+
+
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}
+
+{% block body %}
+{{ parent() }}
+<div class"container">
+    <div class="row">
+        <!--<div class="col-sm-offset-2">-->
+        <div class="panel-group">
+            <div class="panel panel-info">
+                <div class="panel-heading">Profil de {{ user.username }}</div>
+                <div class="panel-body">
+                    <br>
+                    <p><span class="gras">Utilisateur: </span> {{ user.username }} </p>
+                    <p><span class="gras">Famille : </span> {{ user.famille }} </p>
+                    <p><span class="gras">Race : </span> {{ user.race }} </p>
+                    <p><span class="gras">Nourriture Favorite : </span> {{ user.nourritureFav }} </p>
+                    <p><span class="gras">Planete: </span> {{ user.planete }} </p>
+                    <p><span class="gras">Galaxie: </span> {{ user.galaxie}} <p>
+
+                    <div class="gras">Amis: </div>
+                    {% for amis in user.amis %}
+                        {{ amis }}<br>
+                    {% endfor %}
+                    </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

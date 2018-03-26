@@ -1,0 +1,64 @@
+{% extends "AppBundle::main.html.twig" %}
+
+{% block stylesheets %}
+      <link href="{{ asset('css/mes_amis.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+
+
+{% block nav %}
+<li class="active"> <a href="{{ path("mes_amis",{ 'username':app.session.get('username')  })}}">Mes amis</a> </li>
+<li> <a href="{{ path("fos_user_profile_edit") }}">Mon compte</a> </li>
+
+{% endblock %}
+
+{% block body %}
+{{ parent() }}
+<div class="container">
+
+        {# partie de gestion de ses objets #}
+        <div">
+            <ul class="nav nav-pills nav-justified">
+                <li class="active"><a href="#mes_amis" data-toggle="tab">Mes amis</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="mes_amis">
+                    <br>
+            	    {% if utilisateur.amis|length == 0 %}
+            	        <h2>Pas d'amis à afficher</h2>
+            	    {% else %}
+            	        {% for ami in utilisateur.amis %}
+            	       <div class="bordure text-align: center">
+            	                <p class="nom_ami"><a href="{{ path("voir_profil",{ 'username':ami.username})}}"> {{ ami.username }}</p>
+                              <p><a href="{{ path("supprimer_ami",{ 'id': ami.id  })}}">Supprimer </a></p>
+            	       </div>
+            	  </div>
+            	         <br>
+            	         {% endfor %}
+            	         {% endif %}
+            </div>
+                  <div class="panel-body">
+                  <br/>
+                  <br/>
+                    {{ form_start(form, {'attr': {'class':'form-horizontal'}}) }}
+              			{{ form_errors(form) }}
+                      <div class="form-group">
+              				{{ form_label(form.nom, null, {'label_attr': {'class':'control-label col-md-4'}}) }}
+                          <div class="col-md-8">
+              				    {{ form_widget(form.nom, {'attr': {'class':'form-control'}}) }}
+                            	{{ form_errors(form.nom) }}
+                          </div>
+                      </div>
+                      <br/>
+                      <div class="col-lg-offset-10 col-lg-3">
+                        <input type="submit" value="Ajouter" class="btn btn-default">
+                        <input type="reset" value="Effacer" class="btn btn-default">
+                        </div>
+                    {{ form_end(form) }}
+                    <p> </p>
+        		      </div>
+        	  </div>
+    	  </div>
+   </div>
+</div>
+{% endblock %}

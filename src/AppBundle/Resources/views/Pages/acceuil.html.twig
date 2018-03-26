@@ -1,0 +1,58 @@
+{% extends "AppBundle::main.html.twig" %}
+
+{% block nav %}
+<li> <a href="{{ path("mes_amis", { 'username':app.session.get('username')  })}}">Mes Amis</a> </li>
+<li> <a href="{{ path("fos_user_profile_edit") }}">Mon compte</a> </li>
+
+{% endblock %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}
+
+{% block body %}
+<style>
+    body{
+        background-color: gray; /* Le fond de la page sera gris */
+    }
+</style>
+{{ parent() }}
+<div class="container">
+    <div class="row">
+    	<div class="col-md-12">
+    	    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+    	        <div class="alert alert-success">
+                 <h3 style="text-align:center;"> Connecté en tant que {{ username }}</h3>
+                </div>
+            {% endif %}
+    	</div>
+    </div>
+    <div class="col-md-12">
+    <div class=row>
+        <div class="col-md-6">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h2> Bienvenue sur Extra-Network</h2>
+                    <div> <h3> <i>Le premier réseau social extra-terrestre</i></h3></div>
+                    <div><br></div>
+                </div>
+                <div class="panel-body">
+                    <h2> Extra-Network :</h2>
+                    <div><br></div>
+                    <div> <h4><i>***Retrouvez vos amis à travers les galaxies***</i></h4> </div>
+                    <div><br></div>
+                    <div><br></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class=pull-right>
+                <img src="https://cdn.pixabay.com/photo/2016/03/31/17/48/alien-1293916__340.png">
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+{% endblock %}
